@@ -29,25 +29,15 @@ input_data = {
 input_df = pd.DataFrame([input_data])
 st.write("Input Data Preview")
 st.dataframe(input_df)
-# Load training column structure (saved earlier OR recreate once)
-all_columns = churn_model.named_steps['preprocessor'].feature_names_in_
 
-full_input = pd.DataFrame(np.nan, index=[0], columns=all_columns)
-
-full_input.loc[0, 'Tenure Months'] = tenure_months
-full_input.loc[0, 'Monthly Charges'] = monthly_charges
-full_input.loc[0, 'Contract'] = contract_type
-full_input.loc[0, 'Internet Service'] = internet_service
-full_input.loc[0, 'Payment Method'] = payment_method
-
-full_input["Tenure Months"] = full_input["Tenure Months"].astype(float)
-full_input["Monthly Charges"] = full_input["Monthly Charges"].astype(float)
+input_df["Tenure Months"] = input_df["Tenure Months"].astype(float)
+input_df["Monthly Charges"] = input_df["Monthly Charges"].astype(float)
 
 for col in ["Contract", "Internet Service", "Payment Method"]:
-    full_input[col] = full_input[col].astype(str)
+    input_df[col] = input_df[col].astype(str)
 
 if st.button("Predict Churn",key="predict_churn_btn"):
-    churn_prob = churn_model.predict_proba(full_input)[0][1]
+    churn_prob = churn_model.predict_proba(input_df)[0][1]
     st.write(f"Churn Probability: {churn_prob:.2f}")
     threshold = decision_threshold_model  # assuming this is a float
 
