@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd 
-import joblib 
+import joblib
+import numpy as np 
 def to_str_transformer(x):
     return x.astype(str)
 
@@ -14,7 +15,7 @@ tenure_months = st.sidebar.number_input(
     min_value=0,
     step=1
 )
-monthly_charges=st.sidebar.number_input("Monthly CHarges")
+monthly_charges=st.sidebar.number_input("Monthly Charges")
 contract_type=st.sidebar.selectbox('Contract type',['Month-to-month','Two year','One year'])
 internet_service=st.sidebar.selectbox('Internet Service',['DSL','Fiber optic','No'])
 payment_method=st.sidebar.selectbox('Payment Method',['Mailed check','Electronic check','Credit card (automatic)','Bank transfer (automatic)'])
@@ -31,15 +32,19 @@ st.dataframe(input_df)
 # Load training column structure (saved earlier OR recreate once)
 all_columns = churn_model.named_steps['preprocessor'].feature_names_in_
 
-# Create empty row with all columns
-full_input = pd.DataFrame(columns=all_columns)
-full_input.loc[0] = 0
+full_input = pd.DataFrame(np.nan, index=[0], columns=all_columns)
 
 full_input.loc[0, 'Tenure Months'] = tenure_months
 full_input.loc[0, 'Monthly Charges'] = monthly_charges
 full_input.loc[0, 'Contract'] = contract_type
 full_input.loc[0, 'Internet Service'] = internet_service
 full_input.loc[0, 'Payment Method'] = payment_method
+
+full_input["Tenure Months"] = full_input["Tenure Months"].astype(float)
+full_input["Monthly Charges"] = full_input["Monthly Charges"].astype(float)
+
+for col in ["Contract", "Internet Service", "Payment Method"]:
+    full_input[col] = full_input[col].astype(str)
 
 if st.button("Predict Churn",key="predict_churn_btn"):
     churn_prob = churn_model.predict_proba(full_input)[0][1]
