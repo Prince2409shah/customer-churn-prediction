@@ -8,17 +8,17 @@ The project includes **data analysis, feature engineering, model interpretation,
 ## 🚀 Live Demo
 
 🔗 **Deployed Application:**  
-👉 [Add your deployed Streamlit app link here]
+👉 https://prince-customer-churn-prediction.streamlit.app/
 
 ---
 
 ## 🖼 Application Screenshots
 
-### 🔹 Customer Input Interface
-![Churn Input Screenshot](screenshots/input.png)
+### 🔹 Churn  Input
+![Churn](src/Churn.png)
 
-### 🔹 Prediction Output
-![Churn Output Screenshot](screenshots/output.png)
+### 🔹 Not Churn Input
+![Not Churn](src/NotChurn.png)
 
 ---
 
