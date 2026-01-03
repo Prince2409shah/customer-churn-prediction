@@ -7,8 +7,6 @@ def to_str_transformer(x):
 
 churn_model=joblib.load('churn_model_lr.pkl')
 decision_threshold_model=joblib.load('decision_threshold.pkl')
-st.write("MODEL HASH:", hash(str(churn_model)))
-st.write("FEATURES:", churn_model.named_steps["preprocessor"].feature_names_in_)
 st.title('Churn Prediction')
 st.write('This application predicts whether a customer is likely to churn based on their service and account information.')
 st.sidebar.title('Customer Input')
