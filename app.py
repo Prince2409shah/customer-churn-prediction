@@ -5,7 +5,7 @@ import numpy as np
 def to_str_transformer(x):
     return x.astype(str)
 
-churn_model=joblib.load('churn_model.pkl')
+churn_model=joblib.load('churn_model_lr.pkl')
 decision_threshold_model=joblib.load('decision_threshold.pkl')
 st.write("MODEL HASH:", hash(str(churn_model)))
 st.write("FEATURES:", churn_model.named_steps["preprocessor"].feature_names_in_)
